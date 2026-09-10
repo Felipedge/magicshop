@@ -6,13 +6,11 @@
     <link rel="stylesheet" href="style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Magic - Shop</title>
+</head>
 
+<body>
     <!--Navbar de navegacion -->
     <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -22,15 +20,14 @@
             </a>
             <div class="d-flex align-items-center">
                 <button class="btn btn-outline-primary me-3" type="button">Iniciar sesión</button>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <form class="d-flex" role="search" id="searchForm">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchInput" />
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
         </div>
     </nav>
 
-<body>
     <!--Carrusel de imagenes -->
     <div id="carouselExampleIndicators" class="carousel slide">
         <div class="carousel-indicators">
@@ -64,43 +61,92 @@
         </button>
     </div>
 
-    <!--vista de card para cartas de Magic: The Gathering -->
-    <div class="row">
-        <div class="col-sm-6 mb-3 mb-sm-0">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
+    <!-- cards conectadas a la API -->
+    <div class="container my-4">
+        <h2 class="mb-3" id="cardsTitle">Cartas destacadas</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="cardsGrid">
+            <!-- las cards se generan por JS -->
         </div>
     </div>
-
-    <!-- cards-->
 
     <!-- Footer -->
 
     <!-- scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
     <script>
         (function () {
-            <!-- Se conecta a la api de cartas-->
+            // Se conecta a la API de cartas
             const API_BASE = "https://api.magicthegathering.io/v1/cards";
             const grid = document.getElementById("cardsGrid");
             const title = document.getElementById("cardsTitle");
             const searchForm = document.getElementById("searchForm");
             const searchInput = document.getElementById("searchInput");
-        })
 
+            function crearCard(carta) {
+                const imagen = carta.imageUrl
+                    ? `<img src="${carta.imageUrl}" class="card-img-top" alt="${carta.name}">`
+                    : `<div class="d-flex align-items-center justify-content-center bg-secondary-subtle" style="height:300px;">
+                         <span class="text-muted">Sin imagen</span>
+                       </div>`;
+
+                return `
+                    <div class="col">
+                        <div class="card h-100">
+                            ${imagen}
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">${carta.name}</h5>
+                                <p class="card-text text-muted mb-1">${carta.setName || ""}</p>
+                                <p class="card-text"><small class="text-muted">${carta.type || ""}</small></p>
+                                <button class="btn btn-outline-primary mt-auto" type="button">Agregar</button>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+
+            function renderCards(cartas) {
+                if (!cartas.length) {
+                    grid.innerHTML = `<p class="text-muted">No se encontraron cartas.</p>`;
+                    return;
+                }
+                grid.innerHTML = cartas.map(crearCard).join("");
+            }
+
+            function cargarDestacadas() {
+                title.textContent = "Cartas destacadas";
+                grid.innerHTML = `<p class="text-muted">Cargando cartas...</p>`;
+                const paginaAleatoria = Math.floor(Math.random() * 300) + 1;
+                fetch(`${API_BASE}?page=${paginaAleatoria}&pageSize=8`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const cartas = (data.cards || []).filter(c => c.imageUrl);
+                        renderCards(cartas.slice(0, 8));
+                    })
+                    .catch(() => {
+                        grid.innerHTML = `<p class="text-danger">No se pudo conectar con la API.</p>`;
+                    });
+            }
+
+            function buscarCartas(query) {
+                title.textContent = `Resultados para "${query}"`;
+                grid.innerHTML = `<p class="text-muted">Buscando...</p>`;
+                fetch(`${API_BASE}?name=${encodeURIComponent(query)}&pageSize=12`)
+                    .then(res => res.json())
+                    .then(data => renderCards(data.cards || []))
+                    .catch(() => {
+                        grid.innerHTML = `<p class="text-danger">No se pudo conectar con la API.</p>`;
+                    });
+            }
+
+            searchForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const query = searchInput.value.trim();
+                query ? buscarCartas(query) : cargarDestacadas();
+            });
+
+            cargarDestacadas();
+        })();
     </script>
 </body>
 
