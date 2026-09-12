@@ -117,7 +117,7 @@
                 title.textContent = "Cartas destacadas";
                 grid.innerHTML = `<p class="text-muted">Cargando cartas...</p>`;
                 const paginaAleatoria = Math.floor(Math.random() * 300) + 1;
-                fetch(`${API_BASE}?page=${paginaAleatoria}&pageSize=8`)
+                fetch(`${API_BASE}?page=${paginaAleatoria}&pageSize=15`)
                     .then(res => res.json())
                     .then(data => {
                         const cartas = (data.cards || []).filter(c => c.imageUrl);
