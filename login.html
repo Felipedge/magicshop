@@ -54,10 +54,13 @@
         if (cuenta) {
             // Guardar la información del usuario en el almacenamiento local
             localStorage.setItem("usuario", JSON.stringify(cuenta));
-            // Redirigir a la página principal
-            window.location.href = "main.html";
+            // Redirigir segun el rol del usuario
+            
+            window.location.href = cuenta.rol === "admin" ? "admin.html" : "comprador.html";
         } else {
             alert("Correo electrónico o contraseña incorrectos.");
         }
     });
+
+
 </script>
