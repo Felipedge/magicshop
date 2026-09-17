@@ -1,4 +1,50 @@
+/* ===== RESET GENERAL ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+}
+
+/* ===== FONDO (también en html para evitar líneas blancas al hacer scroll/rebote) ===== */
+html {
+  background-image: url('./img/fondo.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+body {
+  background-image: url('./img/fondo.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== CONTENEDOR DEL LOGIN =====
+   flex: 1 hace que tome todo el espacio restante
+   después del navbar, sin necesidad de calc() */
+.container.d-flex.justify-content-center.align-items-center {
+  flex: 1;
+}
+
+/* ===== TARJETA DE LOGIN ===== */
+.card-login {
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 5%;
+}
+
+/* ===== CARRUSEL (si lo usas en otras vistas) ===== */
 .carousel-inner img {
-  height: 500px;
+  height: 400px;
   object-fit: cover;
+  display: block; /* evita la línea blanca debajo de la imagen */
 }
