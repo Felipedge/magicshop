@@ -1,50 +1,107 @@
-/* ===== RESET GENERAL ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ============================
+   Magic-Shop — estilos propios
+   ============================ */
 
-html, body {
-  width: 100%;
-}
-
-/* ===== FONDO (también en html para evitar líneas blancas al hacer scroll/rebote) ===== */
-html {
-  background-image: url('./img/fondo.jpeg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+:root {
+  --ms-primary: #4a2c8a;   /* morado mágico, color de marca */
+  --ms-primary-dark: #35205f;
+  --ms-accent: #d4af37;    /* dorado, para precios y detalles */
+  --ms-bg: #f7f5fb;
 }
 
 body {
-  background-image: url('./img/fondo.jpeg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background-color: var(--ms-bg);
 }
 
-/* ===== CONTENEDOR DEL LOGIN =====
-   flex: 1 hace que tome todo el espacio restante
-   después del navbar, sin necesidad de calc() */
-.container.d-flex.justify-content-center.align-items-center {
-  flex: 1;
+/* ---------- Navbar ---------- */
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
-/* ===== TARJETA DE LOGIN ===== */
+.navbar.bg-dark {
+  background-color: var(--ms-primary-dark) !important;
+}
+
+/* ---------- Botones de marca ---------- */
+.btn-primary {
+  background-color: var(--ms-primary);
+  border-color: var(--ms-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--ms-primary-dark);
+  border-color: var(--ms-primary-dark);
+}
+
+.btn-outline-primary {
+  color: var(--ms-primary);
+  border-color: var(--ms-primary);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--ms-primary);
+  border-color: var(--ms-primary);
+}
+
+/* ---------- Cards de cartas ---------- */
+.card,
 .card-login {
-  background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 5%;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* ===== CARRUSEL (si lo usas en otras vistas) ===== */
-.carousel-inner img {
-  height: 400px;
+.card-login {
+  background-color: #fff;
+  padding: 1.5rem;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.card-img-top {
+  border-radius: 10px 10px 0 0;
   object-fit: cover;
-  display: block; /* evita la línea blanca debajo de la imagen */
+}
+
+.card .fw-bold {
+  color: var(--ms-accent);
+  font-size: 1.05rem;
+}
+
+/* ---------- Carrusel ---------- */
+.carousel-inner img {
+  height: 320px;
+  object-fit: cover;
+}
+
+/* ---------- Formularios ---------- */
+.form-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.form-control:focus {
+  border-color: var(--ms-primary);
+  box-shadow: 0 0 0 0.2rem rgba(74, 44, 138, 0.15);
+}
+
+/* ---------- Footer ---------- */
+footer {
+  background-color: #fff;
+}
+
+/* ---------- Paginador ---------- */
+.page-link {
+  color: var(--ms-primary);
+}
+
+.page-item.active .page-link {
+  background-color: var(--ms-primary);
+  border-color: var(--ms-primary);
 }

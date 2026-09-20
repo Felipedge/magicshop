@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Magic - Shop | Administración</title>
+</head>
+
+<body>
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <a class="navbar-brand d-flex align-items-center" href="admin.html">
+                    <img src="img/logo.png" alt="Logo" width="70" height="24" class="d-inline-block align-text-top me-2">
+                    Magic-Shop <span class="badge bg-secondary ms-2">Admin</span>
+                </a>
+                <div class="d-flex align-items-center">
+                    <form class="d-flex me-3" role="search" id="searchForm">
+                        <label for="searchInput" class="visually-hidden">Buscar carta</label>
+                        <input class="form-control me-2" type="search" placeholder="Buscar carta..."
+                            aria-label="Buscar carta" id="searchInput" autocomplete="off" />
+                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    </form>
+                    <button class="btn btn-outline-danger" type="button" id="btnCerrarSesion">Cerrar sesión</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container my-4">
+            <h2 class="mb-3" id="cardsTitle">Administrar cartas</h2>
+            <p class="text-muted small">Edita el precio y el stock de cada carta, o elimínala de la tienda.</p>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="cardsGrid">
+                <!-- las cards se generan por JS -->
+            </div>
+
+            <!-- Paginador -->
+            <nav class="mt-4" aria-label="Paginación de cartas">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" id="pagAnteriorItem">
+                        <button class="page-link" id="btnPagAnterior">Anterior</button>
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link" id="pagActualLabel">Página 1</span>
+                    </li>
+                    <li class="page-item" id="pagSiguienteItem">
+                        <button class="page-link" id="btnPagSiguiente">Siguiente</button>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+    </main>
+
+    <footer class="border-top py-3 mt-4">
+        <div class="container text-center text-muted small">
+            Magic-Shop &copy; 2026 — Panel de administración. Proyecto académico.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script>
+        (function () {
+            // ---------- SESIÓN ----------
+            const usuario = JSON.parse(localStorage.getItem("usuario") || "null");
+            if (!usuario || usuario.role !== "admin") {
+                window.location.href = "login.html";
+                return;
+            }
+
+            document.getElementById("btnCerrarSesion").addEventListener("click", () => {
+                localStorage.removeItem("usuario");
+                window.location.href = "login.html";
+            });
+
+            const API_BASE = "https://api.magicthegathering.io/v1/cards";
+            const grid = document.getElementById("cardsGrid");
+            const title = document.getElementById("cardsTitle");
+            const searchForm = document.getElementById("searchForm");
+            const searchInput = document.getElementById("searchInput");
+            const PAGE_SIZE = 8;
+
+            let paginaActual = 1;
+            let consultaActual = "";
+            let ultimaCantidadResultados = 0;
+
+            // ---------- INVENTARIO Y ELIMINADAS ----------
+            function leerInventario() {
+                return JSON.parse(localStorage.getItem("inventario") || "{}");
+            }
+            function guardarInventario(inv) {
+                localStorage.setItem("inventario", JSON.stringify(inv));
+            }
+            function leerEliminadas() {
+                return JSON.parse(localStorage.getItem("eliminadas") || "[]");
+            }
+            function guardarEliminadas(lista) {
+                localStorage.setItem("eliminadas", JSON.stringify(lista));
+            }
+
+            function obtenerDatosInventario(carta) {
+                const inv = leerInventario();
+                if (inv[carta.id]) return inv[carta.id];
+
+                const base = {
+                    "Common": 500, "Uncommon": 1000, "Rare": 3000, "Mythic Rare": 8000
+                }[carta.rarity] || 800;
+                let hash = 0;
+                for (let i = 0; i < carta.id.length; i++) hash += carta.id.charCodeAt(i);
+                return { precio: base + (hash % 500), stock: 10 };
+            }
+
+            function actualizarInventario(cartaId, precio, stock) {
+                const inv = leerInventario();
+                inv[cartaId] = { precio: Number(precio), stock: Number(stock) };
+                guardarInventario(inv);
+            }
+
+            function eliminarCarta(cartaId) {
+                const eliminadas = leerEliminadas();
+                if (!eliminadas.includes(cartaId)) {
+                    eliminadas.push(cartaId);
+                    guardarEliminadas(eliminadas);
+                }
+            }
+
+            function formatoCLP(numero) {
+                return numero.toLocaleString("es-CL", { style: "currency", currency: "CLP" });
+            }
+
+            // ---------- RENDER ----------
+            function crearCard(carta) {
+                const datos = obtenerDatosInventario(carta);
+                const imagen = carta.imageUrl
+                    ? `<img src="${carta.imageUrl}" class="card-img-top" alt="${carta.name}">`
+                    : `<div class="d-flex align-items-center justify-content-center bg-secondary-subtle" style="height:280px;">
+                         <span class="text-muted">Sin imagen</span>
+                       </div>`;
+
+                return `
+                    <div class="col" id="col-${carta.id}">
+                        <article class="card h-100">
+                            ${imagen}
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">${carta.name}</h5>
+                                <p class="card-text text-muted mb-2">${carta.setName || ""}</p>
+
+                                <label class="form-label small mb-0" for="precio-${carta.id}">Precio (CLP)</label>
+                                <input type="number" min="0" step="1" class="form-control form-control-sm mb-2"
+                                    id="precio-${carta.id}" value="${datos.precio}">
+
+                                <label class="form-label small mb-0" for="stock-${carta.id}">Stock disponible</label>
+                                <input type="number" min="0" step="1" class="form-control form-control-sm mb-1"
+                                    id="stock-${carta.id}" value="${datos.stock}">
+                                <div class="text-danger small mb-2" id="error-${carta.id}" style="display:none;">
+                                    Ingresa valores válidos (0 o más).
+                                </div>
+
+                                <div class="mt-auto d-flex gap-2">
+                                    <button class="btn btn-outline-success btn-sm flex-fill" type="button"
+                                        data-accion="guardar" data-id="${carta.id}">Guardar</button>
+                                    <button class="btn btn-outline-danger btn-sm flex-fill" type="button"
+                                        data-accion="eliminar" data-id="${carta.id}">Eliminar</button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>`;
+            }
+
+            function renderCards(cartas) {
+                if (!cartas.length) {
+                    grid.innerHTML = `<p class="text-muted">No se encontraron cartas.</p>`;
+                    return;
+                }
+                grid.innerHTML = cartas.map(crearCard).join("");
+
+                grid.querySelectorAll('[data-accion="guardar"]').forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        const id = btn.dataset.id;
+                        const precioInput = document.getElementById(`precio-${id}`);
+                        const stockInput = document.getElementById(`stock-${id}`);
+                        const errorEl = document.getElementById(`error-${id}`);
+                        const precio = precioInput.value;
+                        const stock = stockInput.value;
+
+                        const esValido = precio !== "" && stock !== "" && Number(precio) >= 0 && Number(stock) >= 0;
+
+                        if (!esValido) {
+                            errorEl.style.display = "block";
+                            precioInput.classList.toggle("is-invalid", precio === "" || Number(precio) < 0);
+                            stockInput.classList.toggle("is-invalid", stock === "" || Number(stock) < 0);
+                            return;
+                        }
+
+                        errorEl.style.display = "none";
+                        precioInput.classList.remove("is-invalid");
+                        stockInput.classList.remove("is-invalid");
+
+                        actualizarInventario(id, precio, stock);
+                        btn.textContent = "Guardado ✓";
+                        setTimeout(() => (btn.textContent = "Guardar"), 1200);
+                    });
+                });
+
+                grid.querySelectorAll('[data-accion="eliminar"]').forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        if (!confirm("¿Eliminar esta carta de la tienda?")) return;
+                        eliminarCarta(btn.dataset.id);
+                        document.getElementById(`col-${btn.dataset.id}`).remove();
+                    });
+                });
+            }
+
+            // ---------- CARGA / PAGINADOR ----------
+            function actualizarPaginador() {
+                document.getElementById("pagActualLabel").textContent = `Página ${paginaActual}`;
+                document.getElementById("pagAnteriorItem").classList.toggle("disabled", paginaActual <= 1);
+                document.getElementById("pagSiguienteItem").classList.toggle("disabled", ultimaCantidadResultados < PAGE_SIZE);
+            }
+
+            function cargarPagina() {
+                title.textContent = consultaActual ? `Resultados para "${consultaActual}"` : "Administrar cartas";
+                grid.innerHTML = `<p class="text-muted">Cargando cartas...</p>`;
+
+                const eliminadas = leerEliminadas();
+                let url = `${API_BASE}?page=${paginaActual}&pageSize=${PAGE_SIZE}`;
+                if (consultaActual) url += `&name=${encodeURIComponent(consultaActual)}`;
+
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        const cartas = (data.cards || []).filter(c => c.imageUrl && !eliminadas.includes(c.id));
+                        ultimaCantidadResultados = (data.cards || []).length;
+                        renderCards(cartas);
+                        actualizarPaginador();
+                    })
+                    .catch(() => {
+                        grid.innerHTML = `<p class="text-danger">No se pudo conectar con la API.</p>`;
+                    });
+            }
+
+            document.getElementById("btnPagAnterior").addEventListener("click", () => {
+                if (paginaActual > 1) {
+                    paginaActual--;
+                    cargarPagina();
+                }
+            });
+            document.getElementById("btnPagSiguiente").addEventListener("click", () => {
+                if (ultimaCantidadResultados >= PAGE_SIZE) {
+                    paginaActual++;
+                    cargarPagina();
+                }
+            });
+
+            searchForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                consultaActual = searchInput.value.trim();
+                paginaActual = 1;
+                cargarPagina();
+            });
+
+            cargarPagina();
+        })();
+    </script>
+</body>
+
+</html>
