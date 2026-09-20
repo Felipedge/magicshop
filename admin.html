@@ -87,6 +87,7 @@
             const searchForm = document.getElementById("searchForm");
             const searchInput = document.getElementById("searchInput");
             const PAGE_SIZE = 8;
+            const API_FETCH_SIZE = 20; // se piden más de las que se muestran, por si algunas no tienen imagen
 
             let paginaActual = 1;
             let consultaActual = "";
@@ -223,7 +224,7 @@
             function actualizarPaginador() {
                 document.getElementById("pagActualLabel").textContent = `Página ${paginaActual}`;
                 document.getElementById("pagAnteriorItem").classList.toggle("disabled", paginaActual <= 1);
-                document.getElementById("pagSiguienteItem").classList.toggle("disabled", ultimaCantidadResultados < PAGE_SIZE);
+                document.getElementById("pagSiguienteItem").classList.toggle("disabled", ultimaCantidadResultados < API_FETCH_SIZE);
             }
 
             function cargarPagina() {
@@ -231,7 +232,9 @@
                 grid.innerHTML = `<p class="text-muted">Cargando cartas...</p>`;
 
                 const eliminadas = leerEliminadas();
-                let url = `${API_BASE}?page=${paginaActual}&pageSize=${PAGE_SIZE}`;
+                // Se pide más de las que se muestran (API_FETCH_SIZE), porque algunas no tienen imagen
+                // o pueden estar eliminadas por el admin, y así casi siempre quedan PAGE_SIZE visibles.
+                let url = `${API_BASE}?page=${paginaActual}&pageSize=${API_FETCH_SIZE}`;
                 if (consultaActual) url += `&name=${encodeURIComponent(consultaActual)}`;
 
                 fetch(url)
@@ -239,7 +242,7 @@
                     .then(data => {
                         const cartas = (data.cards || []).filter(c => c.imageUrl && !eliminadas.includes(c.id));
                         ultimaCantidadResultados = (data.cards || []).length;
-                        renderCards(cartas);
+                        renderCards(cartas.slice(0, PAGE_SIZE));
                         actualizarPaginador();
                     })
                     .catch(() => {
