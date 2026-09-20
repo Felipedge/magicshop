@@ -1,67 +1,135 @@
-/* ============================
-   Magic-Shop — estilos propios
-   ============================ */
+/* ================================
+   Magic-Shop — paleta maná pentacolor
+   ================================
+   Fondo oscuro neutro + los 5 colores de maná de Magic,
+   cada uno con un rol funcional específico en la interfaz:
+     - Azul   -> acciones principales (botones primarios, links, foco)
+     - Verde  -> confirmar / guardar / éxito
+     - Rojo   -> eliminar / cerrar sesión / error
+     - Blanco -> precios y texto que debe destacar
+     - Negro (estilizado en gris-violeta) -> elementos secundarios/bordes
+*/
 
 :root {
-  --ms-primary: #4a2c8a;   /* morado mágico, color de marca */
-  --ms-primary-dark: #35205f;
-  --ms-accent: #d4af37;    /* dorado, para precios y detalles */
-  --ms-bg: #f7f5fb;
+  --ms-bg: #13131f;
+  --ms-surface: #1c1c2b;
+  --ms-surface-alt: #242438;
+  --ms-text: #eef0f5;
+  --ms-text-muted: #a4a4ba;
+  --ms-border: rgba(255, 255, 255, 0.08);
+
+  --mana-white: #f5f0dc;
+  --mana-blue: #3b82c4;
+  --mana-blue-dark: #2c638f;
+  --mana-black: #6d5a8a;
+  --mana-red: #c0392b;
+  --mana-red-dark: #9c2d21;
+  --mana-green: #3d8b57;
+  --mana-green-dark: #2e6c42;
 }
 
 body {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
   background-color: var(--ms-bg);
+  color: var(--ms-text);
+}
+
+a {
+  color: var(--mana-blue);
 }
 
 /* ---------- Navbar ---------- */
 .navbar-brand {
   font-weight: 700;
   letter-spacing: 0.5px;
+  color: var(--ms-text) !important;
 }
 
 .navbar.bg-dark {
-  background-color: var(--ms-primary-dark) !important;
+  background-color: var(--ms-surface) !important;
+  border-bottom-color: var(--ms-border) !important;
 }
 
-/* ---------- Botones de marca ---------- */
-.btn-primary {
-  background-color: var(--ms-primary);
-  border-color: var(--ms-primary);
+/* ---------- Botones (mapeados a colores de maná) ---------- */
+.btn-primary,
+.btn-outline-primary:hover {
+  background-color: var(--mana-blue);
+  border-color: var(--mana-blue);
+  color: #fff;
 }
 
 .btn-primary:hover {
-  background-color: var(--ms-primary-dark);
-  border-color: var(--ms-primary-dark);
+  background-color: var(--mana-blue-dark);
+  border-color: var(--mana-blue-dark);
 }
 
 .btn-outline-primary {
-  color: var(--ms-primary);
-  border-color: var(--ms-primary);
+  color: var(--mana-blue);
+  border-color: var(--mana-blue);
 }
 
-.btn-outline-primary:hover {
-  background-color: var(--ms-primary);
-  border-color: var(--ms-primary);
+.btn-success,
+.btn-outline-success:hover {
+  background-color: var(--mana-green);
+  border-color: var(--mana-green);
+}
+
+.btn-success:hover {
+  background-color: var(--mana-green-dark);
+  border-color: var(--mana-green-dark);
+}
+
+.btn-outline-success {
+  color: var(--mana-green);
+  border-color: var(--mana-green);
+}
+
+.btn-danger,
+.btn-outline-danger:hover {
+  background-color: var(--mana-red);
+  border-color: var(--mana-red);
+}
+
+.btn-danger:hover {
+  background-color: var(--mana-red-dark);
+  border-color: var(--mana-red-dark);
+}
+
+.btn-outline-danger {
+  color: var(--mana-red);
+  border-color: var(--mana-red);
+}
+
+.btn-outline-secondary {
+  color: var(--mana-black);
+  border-color: var(--mana-black);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--mana-black);
+  border-color: var(--mana-black);
+  color: #fff;
 }
 
 /* ---------- Cards de cartas ---------- */
 .card,
 .card-login {
-  border: none;
+  background-color: var(--ms-surface);
+  border: 1px solid var(--ms-border);
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.card-login {
-  background-color: #fff;
-  padding: 1.5rem;
+  color: var(--ms-text);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  border-color: var(--mana-blue);
+}
+
+.card-login {
+  padding: 1.5rem;
 }
 
 .card-img-top {
@@ -69,8 +137,18 @@ body {
   object-fit: cover;
 }
 
+.card-title {
+  color: var(--ms-text);
+}
+
+.card .text-muted,
+.card-text.text-muted {
+  color: var(--ms-text-muted) !important;
+}
+
+/* Precio: usa el "maná blanco" para que resalte sobre el fondo oscuro */
 .card .fw-bold {
-  color: var(--ms-accent);
+  color: var(--mana-white);
   font-size: 1.05rem;
 }
 
@@ -83,25 +161,83 @@ body {
 /* ---------- Formularios ---------- */
 .form-label {
   font-weight: 600;
-  color: #333;
+  color: var(--ms-text);
+}
+
+.form-control {
+  background-color: var(--ms-surface-alt);
+  border-color: var(--ms-border);
+  color: var(--ms-text);
+}
+
+.form-control::placeholder {
+  color: var(--ms-text-muted);
 }
 
 .form-control:focus {
-  border-color: var(--ms-primary);
-  box-shadow: 0 0 0 0.2rem rgba(74, 44, 138, 0.15);
+  background-color: var(--ms-surface-alt);
+  color: var(--ms-text);
+  border-color: var(--mana-blue);
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 196, 0.25);
+}
+
+.invalid-feedback {
+  color: var(--mana-red);
+}
+
+.is-invalid {
+  border-color: var(--mana-red) !important;
+}
+
+/* ---------- Alertas ---------- */
+.alert-danger {
+  background-color: rgba(192, 57, 43, 0.15);
+  border-color: var(--mana-red);
+  color: #f2a79e;
+}
+
+/* ---------- Badges ---------- */
+.badge.bg-danger {
+  background-color: var(--mana-red) !important;
+}
+
+.badge.bg-secondary {
+  background-color: var(--mana-black) !important;
+}
+
+/* ---------- Modal / Offcanvas (ya usan bg-dark en el HTML, reforzamos bordes) ---------- */
+.modal-content,
+.offcanvas {
+  background-color: var(--ms-surface) !important;
+  border: 1px solid var(--ms-border);
 }
 
 /* ---------- Footer ---------- */
 footer {
-  background-color: #fff;
+  background-color: var(--ms-surface);
+  border-top-color: var(--ms-border) !important;
+  color: var(--ms-text-muted);
 }
 
 /* ---------- Paginador ---------- */
 .page-link {
-  color: var(--ms-primary);
+  background-color: var(--ms-surface);
+  border-color: var(--ms-border);
+  color: var(--mana-blue);
+}
+
+.page-link:hover {
+  background-color: var(--ms-surface-alt);
+  color: var(--mana-blue);
+}
+
+.page-item.disabled .page-link {
+  background-color: var(--ms-surface);
+  color: var(--ms-text-muted);
 }
 
 .page-item.active .page-link {
-  background-color: var(--ms-primary);
-  border-color: var(--ms-primary);
+  background-color: var(--mana-blue);
+  border-color: var(--mana-blue);
+  color: #fff;
 }
