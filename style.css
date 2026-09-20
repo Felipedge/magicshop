@@ -111,6 +111,15 @@ a {
   color: #fff;
 }
 
+/* ---------- Fondo de la página de login ---------- */
+.login-page {
+  background-image: linear-gradient(rgba(19, 19, 31, 0.75), rgba(19, 19, 31, 0.85)), url("img/fondo.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
 /* ---------- Cards de cartas ---------- */
 .card,
 .card-login {
