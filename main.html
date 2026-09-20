@@ -11,95 +11,173 @@
 </head>
 
 <body>
-    <!--Navbar de navegacion -->
-    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="img/logo.png" alt="Logo" width="70" height="24" class="d-inline-block align-text-top me-2">
-                Magic-Shop
-            </a>
-            <div class="d-flex align-items-center">
-                <button class="btn btn-outline-primary me-3" type="button">Iniciar sesión</button>
-                <form class="d-flex" role="search" id="searchForm">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                        id="searchInput" />
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <a class="navbar-brand d-flex align-items-center" href="main.html">
+                    <img src="img/logo.png" alt="Logo" width="70" height="24" class="d-inline-block align-text-top me-2">
+                    Magic-Shop
+                </a>
+                <div class="d-flex align-items-center">
+                    <form class="d-flex me-3" role="search" id="searchForm">
+                        <label for="searchInput" class="visually-hidden">Buscar carta</label>
+                        <input class="form-control me-2" type="search" placeholder="Buscar carta..."
+                            aria-label="Buscar carta" id="searchInput" autocomplete="off" />
+                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    </form>
+                    <a class="btn btn-outline-primary" href="login.html">Iniciar sesión</a>
+                </div>
             </div>
-        </div>
-    </nav>
-
-    <!--Carrusel de imagenes -->
-    <div id="carouselExampleIndicators" class="carousel slide">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="img/imagen3.jpeg" class="d-block w-100" alt="Carta3 " />
-            </div>
-            <div class="carousel-item">
-                <img src="img/imagen1.jpg" class="d-block w-100" alt="Carta1 " />
-            </div>
-            <div class="carousel-item">
-                <img src="img/imagen2.jpg" class="d-block w-100" alt="Carta2 " />
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Siguiente</span>
-        </button>
-    </div>
-
-    <!-- cards conectadas a la API -->
-    <div class="container my-4">
-        <h2 class="mb-3" id="cardsTitle">Cartas destacadas</h2>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="cardsGrid">
-            <!-- las cards se generan por JS -->
-        </div>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
         </nav>
+    </header>
+
+    <main>
+        <!-- Carrusel -->
+        <section aria-label="Cartas destacadas">
+            <div id="carouselExampleIndicators" class="carousel slide">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="img/imagen3.jpeg" class="d-block w-100" alt="Carta3 " />
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img/imagen1.jpeg" class="d-block w-100" alt="Carta1 " />
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img/imagen2.jpg" class="d-block w-100" alt="Carta2 " />
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Video institucional -->
+        <section class="container my-4">
+            <h2 class="mb-3">¿Cómo comprar en Magic-Shop?</h2>
+            <div class="ratio ratio-16x9" style="max-width: 720px;">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Cómo comprar en Magic-Shop"
+                    allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <!-- Cards (catálogo de vista previa, sin sesión) -->
+        <section class="container my-4">
+            <h2 class="mb-3" id="cardsTitle">Cartas disponibles</h2>
+            <p class="text-muted small">Inicia sesión para agregar cartas al carrito y comprar.</p>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="cardsGrid"></div>
+
+            <!-- Paginador -->
+            <nav class="mt-4" aria-label="Paginación de cartas">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" id="pagAnteriorItem">
+                        <button class="page-link" id="btnPagAnterior">Anterior</button>
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link" id="pagActualLabel">Página 1</span>
+                    </li>
+                    <li class="page-item" id="pagSiguienteItem">
+                        <button class="page-link" id="btnPagSiguiente">Siguiente</button>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+    </main>
+
+    <!-- Modal de detalle (solo lectura, sin carrito) -->
+    <div class="modal fade" id="detalleModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title" id="detalleModalTitle">Nombre de la carta</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex gap-3">
+                    <img id="detalleModalImg" src="" alt="" style="width: 160px; height: auto; border-radius: 6px;">
+                    <div>
+                        <p class="mb-1"><strong>Edición:</strong> <span id="detalleModalSet"></span></p>
+                        <p class="mb-1"><strong>Tipo:</strong> <span id="detalleModalType"></span></p>
+                        <p class="mb-1"><strong>Rareza:</strong> <span id="detalleModalRarity"></span></p>
+                        <p class="mb-1"><strong>Precio:</strong> <span id="detalleModalPrecio"></span></p>
+                        <p class="mb-0 small text-muted" id="detalleModalTexto"></p>
+                    </div>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <a href="login.html" class="btn btn-outline-primary">Inicia sesión para comprar</a>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <footer class="border-top py-3 mt-4">
+        <div class="container text-center text-muted small">
+            Magic-Shop &copy; 2026 — Proyecto académico, no es un servicio de venta real.
+        </div>
+    </footer>
 
-    <!-- Footer -->
-
-    <!-- scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <script>
         (function () {
-            // Se conecta a la API de cartas
+            // Página pública: no requiere sesión. Solo permite ver el catálogo.
             const API_BASE = "https://api.magicthegathering.io/v1/cards";
             const grid = document.getElementById("cardsGrid");
             const title = document.getElementById("cardsTitle");
             const searchForm = document.getElementById("searchForm");
             const searchInput = document.getElementById("searchInput");
+            const PAGE_SIZE = 8;
 
+            let paginaActual = 1;
+            let consultaActual = "";
+            let ultimaCantidadResultados = 0;
+            let cartasActuales = [];
+
+            function leerInventario() {
+                return JSON.parse(localStorage.getItem("inventario") || "{}");
+            }
+            function leerEliminadas() {
+                return JSON.parse(localStorage.getItem("eliminadas") || "[]");
+            }
+
+            function obtenerDatosInventario(carta) {
+                const inv = leerInventario();
+                if (inv[carta.id]) return inv[carta.id];
+
+                const base = {
+                    "Common": 500, "Uncommon": 1000, "Rare": 3000, "Mythic Rare": 8000
+                }[carta.rarity] || 800;
+                let hash = 0;
+                for (let i = 0; i < carta.id.length; i++) hash += carta.id.charCodeAt(i);
+                return { precio: base + (hash % 500), stock: 10 };
+            }
+
+            function formatoCLP(numero) {
+                return numero.toLocaleString("es-CL", { style: "currency", currency: "CLP" });
+            }
+
+            // ---------- RENDER DE CARDS (solo lectura) ----------
             function crearCard(carta) {
+                const datos = obtenerDatosInventario(carta);
+                carta.precio = datos.precio;
+                carta.stock = datos.stock;
+
                 const imagen = carta.imageUrl
                     ? `<img src="${carta.imageUrl}" class="card-img-top" alt="${carta.name}">`
                     : `<div class="d-flex align-items-center justify-content-center bg-secondary-subtle" style="height:300px;">
@@ -108,59 +186,95 @@
 
                 return `
                     <div class="col">
-                        <div class="card h-100">
+                        <article class="card h-100">
                             ${imagen}
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">${carta.name}</h5>
                                 <p class="card-text text-muted mb-1">${carta.setName || ""}</p>
                                 <p class="card-text"><small class="text-muted">${carta.type || ""}</small></p>
-                                <button class="btn btn-outline-primary mt-auto" type="button">Agregar</button>
+                                <p class="card-text fw-bold">${formatoCLP(carta.precio)}</p>
+                                <div class="mt-auto d-flex gap-2">
+                                    <button class="btn btn-outline-secondary btn-sm flex-fill" type="button" data-accion="detalle" data-id="${carta.id}">Detalle</button>
+                                    <a class="btn btn-outline-primary btn-sm flex-fill" href="login.html">Comprar</a>
+                                </div>
                             </div>
-                        </div>
+                        </article>
                     </div>`;
             }
 
             function renderCards(cartas) {
-                if (!cartas.length) {
+                cartasActuales = cartas;
+                if (!cartasActuales.length) {
                     grid.innerHTML = `<p class="text-muted">No se encontraron cartas.</p>`;
                     return;
                 }
-                grid.innerHTML = cartas.map(crearCard).join("");
+                grid.innerHTML = cartasActuales.map(crearCard).join("");
+
+                grid.querySelectorAll('[data-accion="detalle"]').forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        const carta = cartasActuales.find(c => c.id === btn.dataset.id);
+                        abrirDetalle(carta);
+                    });
+                });
             }
 
-            function cargarDestacadas() {
-                title.textContent = "Cartas destacadas";
+            // ---------- MODAL DETALLE ----------
+            const detalleModal = new bootstrap.Modal(document.getElementById("detalleModal"));
+
+            function abrirDetalle(carta) {
+                document.getElementById("detalleModalTitle").textContent = carta.name;
+                document.getElementById("detalleModalImg").src = carta.imageUrl || "";
+                document.getElementById("detalleModalSet").textContent = carta.setName || "—";
+                document.getElementById("detalleModalType").textContent = carta.type || "—";
+                document.getElementById("detalleModalRarity").textContent = carta.rarity || "—";
+                document.getElementById("detalleModalPrecio").textContent = formatoCLP(carta.precio);
+                document.getElementById("detalleModalTexto").textContent = carta.text || "";
+                detalleModal.show();
+            }
+
+            // ---------- CARGA / PAGINADOR ----------
+            function actualizarPaginador() {
+                document.getElementById("pagActualLabel").textContent = `Página ${paginaActual}`;
+                document.getElementById("pagAnteriorItem").classList.toggle("disabled", paginaActual <= 1);
+                document.getElementById("pagSiguienteItem").classList.toggle("disabled", ultimaCantidadResultados < PAGE_SIZE);
+            }
+
+            function cargarPagina() {
+                title.textContent = consultaActual ? `Resultados para "${consultaActual}"` : "Cartas disponibles";
                 grid.innerHTML = `<p class="text-muted">Cargando cartas...</p>`;
-                const paginaAleatoria = Math.floor(Math.random() * 300) + 1;
-                fetch(`${API_BASE}?page=${paginaAleatoria}&pageSize=15`)
+
+                const eliminadas = leerEliminadas();
+                let url = `${API_BASE}?page=${paginaActual}&pageSize=${PAGE_SIZE}`;
+                if (consultaActual) url += `&name=${encodeURIComponent(consultaActual)}`;
+
+                fetch(url)
                     .then(res => res.json())
                     .then(data => {
-                        const cartas = (data.cards || []).filter(c => c.imageUrl);
-                        renderCards(cartas.slice(0, 8));
+                        const cartas = (data.cards || []).filter(c => c.imageUrl && !eliminadas.includes(c.id));
+                        ultimaCantidadResultados = (data.cards || []).length;
+                        renderCards(cartas);
+                        actualizarPaginador();
                     })
                     .catch(() => {
                         grid.innerHTML = `<p class="text-danger">No se pudo conectar con la API.</p>`;
                     });
             }
 
-            function buscarCartas(query) {
-                title.textContent = `Resultados para "${query}"`;
-                grid.innerHTML = `<p class="text-muted">Buscando...</p>`;
-                fetch(`${API_BASE}?name=${encodeURIComponent(query)}&pageSize=12`)
-                    .then(res => res.json())
-                    .then(data => renderCards(data.cards || []))
-                    .catch(() => {
-                        grid.innerHTML = `<p class="text-danger">No se pudo conectar con la API.</p>`;
-                    });
-            }
+            document.getElementById("btnPagAnterior").addEventListener("click", () => {
+                if (paginaActual > 1) { paginaActual--; cargarPagina(); }
+            });
+            document.getElementById("btnPagSiguiente").addEventListener("click", () => {
+                if (ultimaCantidadResultados >= PAGE_SIZE) { paginaActual++; cargarPagina(); }
+            });
 
             searchForm.addEventListener("submit", function (e) {
                 e.preventDefault();
-                const query = searchInput.value.trim();
-                query ? buscarCartas(query) : cargarDestacadas();
+                consultaActual = searchInput.value.trim();
+                paginaActual = 1;
+                cargarPagina();
             });
 
-            cargarDestacadas();
+            cargarPagina();
         })();
     </script>
 </body>
