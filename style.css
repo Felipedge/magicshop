@@ -223,9 +223,13 @@ a {
 
 /* ---------- Footer ---------- */
 footer {
-  background-color: var(--ms-surface);
-  border-top-color: var(--ms-border) !important;
-  color: var(--ms-text-muted);
+  background-color: var(--ms-surface-alt);
+  border-top: 1px solid var(--ms-border) !important;
+}
+
+footer .text-muted,
+footer.text-muted {
+  color: var(--ms-text-muted) !important;
 }
 
 /* ---------- Paginador ---------- */
