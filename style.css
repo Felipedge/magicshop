@@ -1,13 +1,6 @@
 /* ================================
    Magic-Shop — paleta maná pentacolor
    ================================
-   Fondo oscuro neutro + los 5 colores de maná de Magic,
-   cada uno con un rol funcional específico en la interfaz:
-     - Azul   -> acciones principales (botones primarios, links, foco)
-     - Verde  -> confirmar / guardar / éxito
-     - Rojo   -> eliminar / cerrar sesión / error
-     - Blanco -> precios y texto que debe destacar
-     - Negro (estilizado en gris-violeta) -> elementos secundarios/bordes
 */
 
 :root {
