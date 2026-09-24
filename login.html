@@ -15,55 +15,73 @@
   </head>
 
   <body class="login-page">
-    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-      <div
-        class="container-fluid d-flex justify-content-between align-items-center"
-      >
-        <a class="navbar-brand d-flex align-items-center" href="main.html">
-          <img
-            src="img/logo.png"
-            alt="Logo"
-            width="70"
-            height="24"
-            class="d-inline-block align-text-top me-2"
-          />
-          Magic-Shop
-        </a>
-      </div>
-    </nav>
-
-    <div
-      class="container d-flex justify-content-center align-items-center min-vh-100"
-    >
-      <div class="card-login shadow p-4" style="width: 100%; max-width: 400px">
-        <div class="card-body">
-          <h3 class="card-title text-center mb-4">Iniciar Sesión</h3>
-          <form id="formLogin">
-            <div class="mb-3">
-              <label for="email" class="form-label">Correo electrónico</label>
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                placeholder="nombre@ejemplo.com"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Contraseña</label>
-              <input
-                type="password"
-                class="form-control"
-                id="password"
-                placeholder="********"
-                required
-              />
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Entrar</button>
-          </form>
+    <header>
+      <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div
+          class="container-fluid d-flex justify-content-between align-items-center"
+        >
+          <a class="navbar-brand d-flex align-items-center" href="main.html">
+            <img
+              src="img/logo.png"
+              alt="Logo"
+              width="70"
+              height="24"
+              class="d-inline-block align-text-top me-2"
+            />
+            Magic-Shop
+          </a>
         </div>
+      </nav>
+    </header>
+
+    <main>
+      <section
+        class="container d-flex justify-content-center align-items-center min-vh-100"
+      >
+        <div class="card-login shadow p-4" style="width: 100%; max-width: 400px">
+          <div class="card-body">
+            <h3 class="card-title text-center mb-4">Iniciar Sesión</h3>
+            <form id="formLogin" novalidate>
+              <div class="mb-3">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="nombre@ejemplo.com"
+                  autocomplete="email"
+                  required
+                />
+                <div class="invalid-feedback">Ingresa un correo electrónico válido.</div>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="********"
+                  autocomplete="current-password"
+                  minlength="6"
+                  required
+                />
+                <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+              </div>
+              <div id="errorLogin" class="alert alert-danger py-2 small" role="alert" style="display:none;">
+                Correo o contraseña incorrectos.
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Entrar</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-top border-secondary-subtle py-3">
+      <div class="container text-center text-muted small">
+        Magic-Shop &copy; 2026 — Proyecto académico, no es un servicio de venta real.
       </div>
-    </div>
+    </footer>
 
     <script>
       // Credenciales de prueba para ingresos
@@ -83,27 +101,40 @@
         },
       ];
 
-      document
-        .getElementById("formLogin")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-          const email = document.getElementById("email").value;
-          const password = document.getElementById("password").value;
+      const formLogin = document.getElementById("formLogin");
+      const errorLogin = document.getElementById("errorLogin");
 
-          const cuenta = CUENTAS.find(
-            (c) => c.email === email && c.password === password,
-          );
+      formLogin.addEventListener("submit", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
 
-          if (cuenta) {
-            // Guardar la información del usuario en el almacenamiento local
-            localStorage.setItem("usuario", JSON.stringify(cuenta));
-            // Redirigir según el rol del usuario
-            window.location.href =
-              cuenta.role === "admin" ? "admin.html" : "comprador.html";
-          } else {
-            alert("Correo electrónico o contraseña incorrectos.");
-          }
-        });
+        errorLogin.style.display = "none";
+
+        // Validación nativa del formulario (correo válido, contraseña mínima)
+        if (!formLogin.checkValidity()) {
+          formLogin.classList.add("was-validated");
+          return;
+        }
+        formLogin.classList.remove("was-validated");
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        const cuenta = CUENTAS.find(
+          (c) => c.email === email && c.password === password,
+        );
+
+        if (cuenta) {
+          // Guardar la información del usuario en el almacenamiento local
+          localStorage.setItem("usuario", JSON.stringify(cuenta));
+          // Redirigir según el rol del usuario
+          window.location.href =
+            cuenta.role === "admin" ? "admin.html" : "comprador.html";
+        } else {
+          errorLogin.textContent = "Correo o contraseña incorrectos.";
+          errorLogin.style.display = "block";
+        }
+      });
     </script>
   </body>
 </html>
