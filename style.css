@@ -141,6 +141,7 @@ a {
 
 .card-title {
   color: var(--ms-text);
+   justifytext: center;
 }
 
 .card .text-muted,
