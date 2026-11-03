@@ -1,0 +1,45 @@
+{
+  "name": "magicshop",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Magic-Shop: tienda online de cartas Magic: The Gathering (React + Bootstrap)",
+  "type": "module",
+  "scripts": {
+    "start": "concurrently -n api,web -c blue,green \"npm:api\" \"npm:dev\"",
+    "api": "node server/prepare-db.cjs && json-server --watch server/db.json --port 3001",
+    "db:reset": "node server/prepare-db.cjs --reset",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "karma start karma.conf.cjs --single-run",
+    "test:watch": "karma start karma.conf.cjs"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^8.1.0",
+    "@babel/preset-env": "^8.0.7",
+    "@babel/preset-react": "^8.0.1",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@vitejs/plugin-react": "^6.2.1",
+    "babel-loader": "^10.1.1",
+    "babel-plugin-istanbul": "^8.0.0",
+    "concurrently": "^10.0.6",
+    "jasmine-core": "^4.6.1",
+    "json-server": "^0.17.4",
+    "karma": "^6.4.4",
+    "karma-chrome-launcher": "^3.2.0",
+    "karma-coverage": "^2.2.1",
+    "karma-jasmine": "^5.1.0",
+    "karma-jasmine-html-reporter": "^2.3.0",
+    "karma-spec-reporter": "^0.0.37",
+    "karma-webpack": "^5.0.1",
+    "vite": "^8.3.5",
+    "webpack": "^5.112.2"
+  }
+}
