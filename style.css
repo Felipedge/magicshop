@@ -1,50 +1,249 @@
-/* ===== RESET GENERAL ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ================================
+   Magic-Shop — paleta maná pentacolor
+   ================================
+*/
 
-html, body {
-  width: 100%;
-}
+:root {
+  --ms-bg: #13131f;
+  --ms-surface: #1c1c2b;
+  --ms-surface-alt: #242438;
+  --ms-text: #eef0f5;
+  --ms-text-muted: #a4a4ba;
+  --ms-border: rgba(255, 255, 255, 0.08);
 
-/* ===== FONDO (también en html para evitar líneas blancas al hacer scroll/rebote) ===== */
-html {
-  background-image: url('./img/fondo.jpeg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  --mana-white: #f5f0dc;
+  --mana-blue: #3b82c4;
+  --mana-blue-dark: #2c638f;
+  --mana-black: #6d5a8a;
+  --mana-red: #c0392b;
+  --mana-red-dark: #9c2d21;
+  --mana-green: #3d8b57;
+  --mana-green-dark: #2e6c42;
 }
 
 body {
-  background-image: url('./img/fondo.jpeg');
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background-color: var(--ms-bg);
+  color: var(--ms-text);
+}
+
+a {
+  color: var(--mana-blue);
+}
+
+/* ---------- Navbar ---------- */
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--ms-text) !important;
+}
+
+.navbar.bg-dark {
+  background-color: var(--ms-surface) !important;
+  border-bottom-color: var(--ms-border) !important;
+}
+
+/* ---------- Botones (mapeados a colores de maná) ---------- */
+.btn-primary,
+.btn-outline-primary:hover {
+  background-color: var(--mana-blue);
+  border-color: var(--mana-blue);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--mana-blue-dark);
+  border-color: var(--mana-blue-dark);
+}
+
+.btn-outline-primary {
+  color: var(--mana-blue);
+  border-color: var(--mana-blue);
+}
+
+.btn-success,
+.btn-outline-success:hover {
+  background-color: var(--mana-green);
+  border-color: var(--mana-green);
+}
+
+.btn-success:hover {
+  background-color: var(--mana-green-dark);
+  border-color: var(--mana-green-dark);
+}
+
+.btn-outline-success {
+  color: var(--mana-green);
+  border-color: var(--mana-green);
+}
+
+.btn-danger,
+.btn-outline-danger:hover {
+  background-color: var(--mana-red);
+  border-color: var(--mana-red);
+}
+
+.btn-danger:hover {
+  background-color: var(--mana-red-dark);
+  border-color: var(--mana-red-dark);
+}
+
+.btn-outline-danger {
+  color: var(--mana-red);
+  border-color: var(--mana-red);
+}
+
+.btn-outline-secondary {
+  color: var(--mana-black);
+  border-color: var(--mana-black);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--mana-black);
+  border-color: var(--mana-black);
+  color: #fff;
+}
+
+/* ---------- Fondo de la página de login ---------- */
+.login-page {
+  background-image: linear-gradient(rgba(19, 19, 31, 0.75), rgba(19, 19, 31, 0.85)), url("img/fondo.jpeg");
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  background-attachment: fixed;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
-/* ===== CONTENEDOR DEL LOGIN =====
-   flex: 1 hace que tome todo el espacio restante
-   después del navbar, sin necesidad de calc() */
-.container.d-flex.justify-content-center.align-items-center {
-  flex: 1;
-}
-
-/* ===== TARJETA DE LOGIN ===== */
+/* ---------- Cards de cartas ---------- */
+.card,
 .card-login {
-  background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 5%;
+  background-color: var(--ms-surface);
+  border: 1px solid var(--ms-border);
+  border-radius: 10px;
+  color: var(--ms-text);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
-/* ===== CARRUSEL (si lo usas en otras vistas) ===== */
-.carousel-inner img {
-  height: 400px;
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  border-color: var(--mana-blue);
+}
+
+.card-login {
+  padding: 1.5rem;
+}
+
+.card-img-top {
+  border-radius: 10px 10px 0 0;
   object-fit: cover;
-  display: block; /* evita la línea blanca debajo de la imagen */
+}
+
+.card-title {
+  color: var(--ms-text);
+}
+
+.card .text-muted,
+.card-text.text-muted {
+  color: var(--ms-text-muted) !important;
+}
+
+/* Precio: usa el "maná blanco" para que resalte sobre el fondo oscuro */
+.card .fw-bold {
+  color: var(--mana-white);
+  font-size: 1.05rem;
+}
+
+/* ---------- Carrusel ---------- */
+.carousel-inner img {
+  height: 320px;
+  object-fit: cover;
+}
+
+/* ---------- Formularios ---------- */
+.form-label {
+  font-weight: 600;
+  color: var(--ms-text);
+}
+
+.form-control {
+  background-color: var(--ms-surface-alt);
+  border-color: var(--ms-border);
+  color: var(--ms-text);
+}
+
+.form-control::placeholder {
+  color: var(--ms-text-muted);
+}
+
+.form-control:focus {
+  background-color: var(--ms-surface-alt);
+  color: var(--ms-text);
+  border-color: var(--mana-blue);
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 196, 0.25);
+}
+
+.invalid-feedback {
+  color: var(--mana-red);
+}
+
+.is-invalid {
+  border-color: var(--mana-red) !important;
+}
+
+/* ---------- Alertas ---------- */
+.alert-danger {
+  background-color: rgba(192, 57, 43, 0.15);
+  border-color: var(--mana-red);
+  color: #f2a79e;
+}
+
+/* ---------- Badges ---------- */
+.badge.bg-danger {
+  background-color: var(--mana-red) !important;
+}
+
+.badge.bg-secondary {
+  background-color: var(--mana-black) !important;
+}
+
+/* ---------- Modal / Offcanvas (ya usan bg-dark en el HTML, reforzamos bordes) ---------- */
+.modal-content,
+.offcanvas {
+  background-color: var(--ms-surface) !important;
+  border: 1px solid var(--ms-border);
+}
+
+/* ---------- Footer ---------- */
+footer {
+  background-color: var(--ms-surface-alt);
+  border-top: 1px solid var(--ms-border) !important;
+}
+
+footer .text-muted,
+footer.text-muted {
+  color: var(--ms-text-muted) !important;
+}
+
+/* ---------- Paginador ---------- */
+.page-link {
+  background-color: var(--ms-surface);
+  border-color: var(--ms-border);
+  color: var(--mana-blue);
+}
+
+.page-link:hover {
+  background-color: var(--ms-surface-alt);
+  color: var(--mana-blue);
+}
+
+.page-item.disabled .page-link {
+  background-color: var(--ms-surface);
+  color: var(--ms-text-muted);
+}
+
+.page-item.active .page-link {
+  background-color: var(--mana-blue);
+  border-color: var(--mana-blue);
+  color: #fff;
 }
