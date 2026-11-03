@@ -1,0 +1,380 @@
+/* ================================
+   Magic-Shop — paleta maná pentacolor
+   (estilos propios encima de Bootstrap 5)
+   ================================ */
+
+:root {
+  --ms-bg: #13131f;
+  --ms-surface: #1c1c2b;
+  --ms-surface-alt: #242438;
+  --ms-text: #eef0f5;
+  --ms-text-muted: #a4a4ba;
+  --ms-border: rgba(255, 255, 255, 0.08);
+
+  --mana-white: #f5f0dc;
+  --mana-blue: #3b82c4;
+  --mana-blue-dark: #2c638f;
+  --mana-black: #6d5a8a;
+  --mana-red: #c0392b;
+  --mana-red-dark: #9c2d21;
+  --mana-green: #3d8b57;
+  --mana-green-dark: #2e6c42;
+
+  /* Bootstrap usa estas variables en tablas, textos y componentes */
+  --bs-body-bg: var(--ms-bg);
+  --bs-body-color: var(--ms-text);
+  --bs-secondary-color: var(--ms-text-muted);
+  --bs-border-color: var(--ms-border);
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background-color: var(--ms-bg);
+  color: var(--ms-text);
+}
+
+a {
+  color: var(--mana-blue);
+}
+
+.text-muted {
+  color: var(--ms-text-muted) !important;
+}
+
+/* ---------- Navbar ---------- */
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--ms-text) !important;
+}
+
+.navbar.bg-dark,
+.admin-topbar {
+  background-color: var(--ms-surface) !important;
+  border-bottom: 1px solid var(--ms-border) !important;
+}
+
+.navbar .dropdown-toggle.btn-link {
+  text-decoration: none;
+}
+
+@media (min-width: 1200px) {
+  /* Grilla de 3 columnas: logo | centro | cuenta. Las columnas laterales miden lo mismo,
+     así el bloque central queda centrado respecto a la página. */
+  .navbar .container-fluid.nav-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    column-gap: 1rem;
+  }
+  .navbar-expand-xl .navbar-collapse.nav-collapse {
+    display: contents !important; /* sus hijos pasan a ser columnas de la grilla */
+  }
+  .nav-cuenta {
+    justify-self: end;
+  }
+  .buscador-nav {
+    width: 420px;
+  }
+  .navbar .dropdown-menu {
+    position: absolute;
+  }
+}
+
+.navbar .dropdown-menu {
+  background-color: var(--ms-surface-alt);
+}
+
+/* ---------- Botones (colores de maná) ---------- */
+.btn-primary,
+.btn-outline-primary:hover {
+  background-color: var(--mana-blue);
+  border-color: var(--mana-blue);
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: var(--mana-blue-dark);
+  border-color: var(--mana-blue-dark);
+}
+.btn-outline-primary {
+  color: var(--mana-blue);
+  border-color: var(--mana-blue);
+}
+
+.btn-success,
+.btn-outline-success:hover {
+  background-color: var(--mana-green);
+  border-color: var(--mana-green);
+  color: #fff;
+}
+.btn-success:hover {
+  background-color: var(--mana-green-dark);
+  border-color: var(--mana-green-dark);
+}
+.btn-outline-success {
+  color: var(--mana-green);
+  border-color: var(--mana-green);
+}
+
+.btn-danger,
+.btn-outline-danger:hover {
+  background-color: var(--mana-red);
+  border-color: var(--mana-red);
+  color: #fff;
+}
+.btn-danger:hover {
+  background-color: var(--mana-red-dark);
+  border-color: var(--mana-red-dark);
+}
+.btn-outline-danger {
+  color: var(--mana-red);
+  border-color: var(--mana-red);
+}
+
+.btn-outline-secondary {
+  color: #b9a8d6;
+  border-color: var(--mana-black);
+}
+.btn-outline-secondary:hover {
+  background-color: var(--mana-black);
+  border-color: var(--mana-black);
+  color: #fff;
+}
+
+/* ---------- Cards ---------- */
+.card,
+.card-login {
+  background-color: var(--ms-surface);
+  border: 1px solid var(--ms-border);
+  border-radius: 10px;
+  color: var(--ms-text);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.card-login {
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+.producto-card,
+.categoria-card,
+.modulo-card {
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.producto-card:hover,
+.categoria-card:hover,
+.modulo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  border-color: var(--mana-blue);
+}
+
+.badge-oferta {
+  z-index: 1;
+}
+
+.card-img-top {
+  border-radius: 10px 10px 0 0;
+  object-fit: cover;
+}
+
+.categoria-img {
+  height: 110px;
+  object-position: top;
+}
+
+
+.card-title {
+  color: var(--ms-text);
+}
+
+.precio {
+  color: var(--mana-white);
+}
+
+.detalle-img {
+  max-height: 460px;
+}
+
+.texto-carta {
+  background-color: var(--ms-surface-alt);
+  border-left: 3px solid var(--mana-blue);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+}
+
+.miniatura {
+  width: 40px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.dato-lectura {
+  background-color: var(--ms-surface-alt);
+  border-radius: 6px;
+  padding: 0.35rem 0.6rem;
+  min-height: 2rem;
+}
+
+/* ---------- Carrusel ---------- */
+.carousel-inner img {
+  height: 320px;
+  object-fit: cover;
+}
+@media (max-width: 576px) {
+  .carousel-inner img {
+    height: 180px;
+  }
+}
+
+.video-home {
+  max-width: 720px;
+}
+
+/* ---------- Formularios ---------- */
+.form-label {
+  font-weight: 600;
+  color: var(--ms-text);
+}
+
+.form-control,
+.form-select {
+  background-color: var(--ms-surface-alt);
+  border-color: var(--ms-border);
+  color: var(--ms-text);
+}
+.form-control::placeholder {
+  color: var(--ms-text-muted);
+}
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--ms-surface-alt);
+  color: var(--ms-text);
+  border-color: var(--mana-blue);
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 196, 0.25);
+}
+.form-control:disabled,
+.form-select:disabled {
+  background-color: var(--ms-surface);
+  color: var(--ms-text-muted);
+}
+
+.invalid-feedback {
+  color: #f2a79e;
+}
+.is-invalid {
+  border-color: var(--mana-red) !important;
+}
+
+/* ---------- Login / Registro ---------- */
+.login-page {
+  background-image: linear-gradient(rgba(19, 19, 31, 0.75), rgba(19, 19, 31, 0.85)), url('/img/fondo.jpeg');
+  background-size: cover;
+  background-position: center;
+  min-height: 80vh;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* ---------- Alertas / avisos ---------- */
+.alert-danger {
+  background-color: rgba(192, 57, 43, 0.15);
+  border-color: var(--mana-red);
+  color: #f2a79e;
+}
+
+.aviso-flotante {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1080;
+  max-width: min(360px, calc(100vw - 2rem));
+}
+
+/* ---------- Tablas ---------- */
+.table-dark {
+  --bs-table-bg: var(--ms-surface);
+  --bs-table-border-color: var(--ms-border);
+}
+
+/* ---------- Badges ---------- */
+.badge.bg-danger {
+  background-color: var(--mana-red) !important;
+}
+.badge.bg-secondary {
+  background-color: var(--mana-black) !important;
+}
+
+/* ---------- Paginador / breadcrumb ---------- */
+.breadcrumb-item.active {
+  color: var(--ms-text-muted);
+}
+
+/* ---------- Footer ---------- */
+footer {
+  background-color: var(--ms-surface-alt);
+  border-top: 1px solid var(--ms-border);
+}
+
+.footer-titulo {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.footer-links li + li {
+  margin-top: 0.25rem;
+}
+
+.footer-links a {
+  color: var(--ms-text-muted);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--mana-blue);
+}
+
+.footer-separador {
+  border-color: var(--ms-border);
+  opacity: 1;
+}
+
+/* ---------- Admin ---------- */
+.admin-sidebar {
+  background-color: var(--ms-surface);
+  border-right: 1px solid var(--ms-border);
+}
+@media (min-width: 992px) {
+  .admin-sidebar {
+    width: 240px;
+    min-height: calc(100vh - 52px);
+    flex-shrink: 0;
+  }
+}
+.admin-sidebar .nav-link {
+  color: var(--ms-text);
+}
+.admin-sidebar .nav-link.active {
+  background-color: var(--mana-blue);
+}
+
+.stat-card.text-bg-warning {
+  color: #1c1c2b !important;
+}
+
+/* ---------- Impresión de boleta ---------- */
+@media print {
+  header,
+  footer,
+  .admin-sidebar,
+  .btn {
+    display: none !important;
+  }
+  body,
+  .card {
+    background: #fff !important;
+    color: #000 !important;
+  }
+}
